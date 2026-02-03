@@ -1,0 +1,8 @@
+src/sam2_configs
+__pycache__/
+*.py[cod]
+*$py.class
+*.pt
+*.pth
+*.onnx
+*.ckpt
