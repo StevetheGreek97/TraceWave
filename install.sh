@@ -51,6 +51,47 @@ if ! command -v "$PYTHON" >/dev/null 2>&1; then
   exit 1
 fi
 
+install_ffmpeg() {
+  if command -v ffmpeg >/dev/null 2>&1 && command -v ffprobe >/dev/null 2>&1; then
+    echo "FFmpeg and FFprobe already installed."
+    return 0
+  fi
+
+  echo "FFmpeg/FFprobe not found. Installing..."
+
+  if command -v apt-get >/dev/null 2>&1; then
+    sudo apt-get update
+    sudo apt-get install -y ffmpeg
+    return 0
+  fi
+
+  if command -v brew >/dev/null 2>&1; then
+    brew install ffmpeg
+    return 0
+  fi
+
+  if command -v dnf >/dev/null 2>&1; then
+    sudo dnf install -y ffmpeg
+    return 0
+  fi
+
+  if command -v yum >/dev/null 2>&1; then
+    sudo yum install -y ffmpeg
+    return 0
+  fi
+
+  if command -v pacman >/dev/null 2>&1; then
+    sudo pacman -Sy --noconfirm ffmpeg
+    return 0
+  fi
+
+  echo "Error: Unsupported package manager. Please install ffmpeg and ffprobe manually."
+  echo "See: https://ffmpeg.org/download.html"
+  exit 1
+}
+
+install_ffmpeg
+
 if [[ ! -d "$VENV" ]]; then
   "$PYTHON" -m venv "$VENV"
 fi
