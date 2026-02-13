@@ -18,16 +18,26 @@ TraceWave is a desktop app for annotating video frames with points, boxes, and p
 - Optional for SAM2: PyTorch, OpenCV, and the `sam2` package.
 - Optional for YAML export: PyYAML.
 
-**Quick Install (Recommended)**
+**Quick Install (macOS/Linux)**
 The included installer sets up a virtual environment, installs all extras, and downloads the SAM2 weights.
 
 ```bash
 ./install.sh
+./run.sh
 ```
 
-Then launch the app:
+**Quick Install (Windows)**
+Use the Windows batch scripts from CMD or PowerShell:
+
+```bat
+install.bat
+run.bat
+```
+
+Alternatively, you can run the Bash scripts using Git Bash or WSL:
 
 ```bash
+./install.sh
 ./run.sh
 ```
 
@@ -54,7 +64,9 @@ python -m src.tracewave
 ```
 
 **Conda Install (Windows/macOS/Linux)**
-If you prefer Anaconda/Miniconda, use a dedicated env and install with pip:
+If you prefer Anaconda/Miniconda, use a dedicated env and install with pip.
+Note: the `sam2` package is not available on conda channels, so you must use pip
+inside the conda env (or omit the `sam2` extra).
 
 ```bash
 conda create -n tracewave python=3.10 -y
@@ -62,6 +74,12 @@ conda activate tracewave
 conda install -c conda-forge ffmpeg -y
 python -m pip install --upgrade pip
 python -m pip install -e ".[sam2,yaml]"
+```
+
+If you do not want SAM2, install only core + YAML:
+
+```bash
+python -m pip install -e ".[yaml]"
 ```
 
 Download SAM2 weights (only if you installed the `sam2` extra):
@@ -79,10 +97,12 @@ python -m src.tracewave
 **What Gets Installed**
 - Core: `PyQt6`, `numpy`
 - Extras: `torch`, `opencv-python`, `sam2`, `pyyaml`
+- `sam2` is installed via pip (not conda).
 - SAM2 weights are downloaded to `src/sam2_configs/sam2_hiera_tiny.pt`
 
 **Run Options**
-- `./run.sh` uses `.venv/bin/python` by default.
+- `./run.sh` uses `.venv/bin/python` by default, or an active conda env if present.
+- Windows: `run.bat` uses `.venv\Scripts\python.exe`.
 - You can override with `PYTHON=/path/to/python ./run.sh`.
 - You can also run directly with `python -m src.tracewave`.
 

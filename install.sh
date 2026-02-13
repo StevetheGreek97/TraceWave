@@ -54,6 +54,7 @@ Options:
 Environment:
   VENV, PYTHON can also be set via env vars.
   If a conda env is active and no mode is specified, conda is used.
+  Note: sam2 is not available on conda channels; pip is used even in conda envs.
 EOF
 }
 
